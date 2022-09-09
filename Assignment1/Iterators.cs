@@ -1,5 +1,5 @@
 namespace Assignment1;
-
+using static WeekDays;
 public static class Iterators
 {
     public static IEnumerable<T> Flatten<T>(IEnumerable<IEnumerable<T>> items) {
@@ -16,5 +16,24 @@ public static class Iterators
         return returnList; 
     }
 
-    public static IEnumerable<T> Filter<T>(IEnumerable<T> items, Predicate<T> predicate) => throw new NotImplementedException();
+    public static IEnumerable<T> Filter<T>(IEnumerable<T> items, Predicate<T> predicate)
+    {   
+        foreach(var item in items){
+            if(predicate(item))
+            {
+                yield return item;
+            }
+
+        }
+    }
+    public static bool isFriday(WeekDays day){
+
+        if(day == WeekDays.Friday){
+            return true;
+        }
+        return false;
+    
+    }
+  
+    
 }
