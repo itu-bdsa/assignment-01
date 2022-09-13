@@ -13,6 +13,7 @@ public class IteratorsTests
         var innerlist2 = new List<int>() { 1, 2, 3, 4, 5 };
         var list1 = new List<IEnumerable<int>>() { innerlist1, innerlist2 };
 
+
         //Act
         var actual = Iterators.Flatten(list1);
         //Assert
@@ -32,4 +33,5 @@ public class IteratorsTests
         // Assert
         Assert.Equal(new List<int> { 2, 4 }, actual);
     }
+    
 }
