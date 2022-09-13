@@ -15,14 +15,10 @@ public static class RegExpr
     }
 
    public static IEnumerable<(int width, int height)> Resolution(string resolutions) {
-        string pattern = @"^([1-5][0-9]{2}|600)x";
+        string pattern = @"(?<reso_one>\d{3,4})x(?<reso_two>\d{3,4})";
         Regex regex = new Regex(pattern);
         foreach (Match match in regex.Matches(resolutions)) {
-            var previous = 0;
-            if(previous != 0) {
-                yield return (previous, Int32.Parse(match.Value));
-            }
-            previous = Int32.Parse(match.Value);
+            yield return (Int32.Parse(match.Groups[1].Value), Int32.Parse(match.Groups[2].Value));
         }
     }
 

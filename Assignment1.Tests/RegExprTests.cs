@@ -12,7 +12,7 @@ public class RegExprTests
         var line1 = "hello there";
         var line2 = "these are words";
         var list1 = new List<string>() { line1, line2 };
-        
+
         // Act
         var actual = RegExpr.SplitLine(list1);
         
@@ -32,7 +32,7 @@ public class RegExprTests
         var actual = RegExpr.Resolution(sampleInput);
 
         // Assert
-        var expected = new List<Tuple<int, int>>();
+        var expected = new List<(int, int)>() {(1024, 768), (800, 600), (640, 480)};
         expected.Should().BeEquivalentTo(actual);
     }
 }
