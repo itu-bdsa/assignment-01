@@ -75,6 +75,22 @@ public class RegExprTests
     }
 
     [Fact]
+    public void InnerText_given_sample_input_paragraph()
+    {
+        // Arrange
+        string html = "<div><p>The phrase <i>regular expressions</i> (and consequently, regexes) is often used to mean the specific, standard textual syntax for representing <u>patterns</u> that matching <em>text</em> need to conform to.</p></div>";
+
+        //Act
+        var output = RegExpr.InnerText(html, "p");
+        
+        //Assert
+        var expected = new string[] {
+            "The phrase regular expressions (and consequently, regexes) is often used to mean the specific, standard textual syntax for representing patterns that matching text need to conform to."
+        };
+        Assert.Equal(expected, output);
+    }
+
+    [Fact]
     public void Urls_given_sample_input()
     {
         // Arrange

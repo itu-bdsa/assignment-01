@@ -33,10 +33,12 @@ public static class RegExpr
 
     public static IEnumerable<string> InnerText(string html, string tag)
     {
-        var pattern = @"(?<=<([" + tag + @"]+).*?>)(?'innertext'[\p{L} </().,]+)(?=</\1>)";
+        //var pattern = @"(?<=<([" + tag + @"]+).*?>)(?'innertext'[\p{L} </().,]+)(?=</\1>)";
+        var pattern = @"(?<=<([" + tag + "]+)[\\p{L} ()=\":/_.]*?>)(?'innertext'.+?)(?=</\\1>)";
         foreach(Match match in Regex.Matches(html, pattern))
         {
-            yield return match.Groups["innertext"].Value;
+            string innerText = match.Groups["innertext"].Value;
+            yield return Regex.Replace(innerText, @"<.*?>", "");
         }
     }
 
