@@ -21,4 +21,18 @@ public class RegExprTests
         actual.Should().BeEquivalentTo(new List<string>() {"hello", "there", "these", "are", "words"});
 
     }
+
+    
+    [Fact]
+    public void Resolution_Sample_Input_Gives_Correct_OutPut() {
+        // Arrange
+        var sampleInput = "1024x768, 800x600, 640x480";
+
+        // Act
+        var actual = RegExpr.Resolution(sampleInput);
+
+        // Assert
+        var expected = new List<Tuple<int, int>>();
+        expected.Should().BeEquivalentTo(actual);
+    }
 }
