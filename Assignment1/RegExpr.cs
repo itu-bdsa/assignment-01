@@ -59,7 +59,7 @@ public static class RegExpr
             {
                 var patternUrl = @"https?://[\p{L}.-/_()]+";
                 string url = Regex.Match(inn, patternUrl).Value;
-                yield return (new Uri(url),match.Value);
+                yield return (new Uri(url),InnerText(match.Value, "a").First());
             }
         }
     }
