@@ -18,4 +18,21 @@ public class IteratorsTests
             //Assert
             Assert.Equal(answer, output);
         }
+
+        [Fact]
+
+        public void Filter_list_1_2_4_should_return_2_4() {
+            //Arrange
+            var list = new List<int> {1, 2, 4};
+            var expected = new List<int> {2, 4};
+
+            Predicate<int> even = Even;
+            bool Even(int i) => i % 2 == 0;
+
+            //Act
+            var actual = Iterators.Filter<int>(list, even);
+
+            //Assert
+            Assert.Equal(expected, actual);
+        }
 }
