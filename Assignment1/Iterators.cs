@@ -6,5 +6,14 @@ public static class Iterators
         return (IEnumerable<T>) new List<int>();
     }
 
-    public static IEnumerable<T> Filter<T>(IEnumerable<T> items, Predicate<T> predicate) => throw new NotImplementedException();
+    public static IEnumerable<T> Filter<T>(IEnumerable<T> items, Predicate<T> predicate)
+    {
+        foreach(var item in items)
+        {
+            if (predicate(item))
+            {
+                yield return item;
+            }
+        }
+    }
 }
