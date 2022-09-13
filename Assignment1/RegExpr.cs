@@ -25,6 +25,8 @@ public static class RegExpr
         var pattern = @"(?<width>[0-9]+)x(?<height>[0-9]+)([, ] )*";
 
         var match = Regex.Matches(resolutions, pattern);
+        //OBS - er match en collection? Tjek om man kan lave noget med et
+        //for-loop i stedet. Samme i andre opgaver med .Matches!
 
         foreach(Match m in match){
             yield return (int.Parse(m.Groups["width"].Value), int.Parse(m.Groups["height"].Value));
@@ -47,5 +49,18 @@ public static class RegExpr
     public static IEnumerable<(Uri url, string title)> Urls(string html){
         //Urls takes as argument a string containing HTML and returns all urls with
         // their titles if any, otherwise innerText.
+        var pattern = $@"<([a-z]?) href=""(?<url>.*?)?"" [title=""]+(?<titleText>([(]*[A-Za-z ]+[)]*)+)[^>]*>(?<innerText>.*?)</\1>";
+
+        var match = Regex.Matches(html, pattern);
+        
+        foreach(Match m in match){
+            Uri l = new Uri(m.Groups["url"].Value);
+            if(m.Groups["titleText"].Value != null){
+                yield return (l, m.Groups["titleText"].Value);
+            } else {
+                yield return (l, m.Groups["innerText"].Value);
+            }
+            
+        }
     }
 }

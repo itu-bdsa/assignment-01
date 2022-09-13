@@ -12,6 +12,7 @@ public static class Iterators
             }    
         
         }
+        //items.SelectMany(x=>x).ToList();
 
     }
 
