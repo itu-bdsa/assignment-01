@@ -2,7 +2,6 @@ namespace Assignment1.Tests;
 
 public class IteratorsTests
 {
-
     [Fact]
     public void FilterAllTrueNaturalNumbers(){
         //Setup
@@ -86,5 +85,41 @@ public class IteratorsTests
         Assert.Equal(0, count);
     }
 
+    [Fact]
+    public void FlattenThreeNestedLists(){
+        //Setup
+
+        List<List<int>> input = new List<List<int>>()
+        {
+            new List<int>() { 1, 2, 3 },
+            new List<int>() { 4, 5 },
+            new List<int>() { 6, 7, 8, 9 }
+        };
+
+        //Act
+        var output = Iterators.Flatten<int>(input);
+
+        //Assert
+        var expectedValue = 1;
+        foreach (var item in output)
+        {
+            Assert.Equal(expectedValue, item);
+            expectedValue++;
+        }
+    }
+
+        [Fact]
+    public void FlattenEmpty(){
+        //Setup
+        List<List<int>> input = new List<List<int>>();
+        //Act
+        var output = Iterators.Flatten<int>(input);
+
+        //Assert
+        foreach (var item in output)
+        {
+            Assert.True(false);
+        }
+    }
 
 }
