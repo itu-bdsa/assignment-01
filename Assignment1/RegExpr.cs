@@ -8,14 +8,11 @@ public static class RegExpr
 
         var pattern = @"(?<word>\w[a-z]*[0-9]*)+";
 
-        foreach(var l in lines){
-            //var match = Regex.Match(l, pattern);
-            var match = Regex.Matches(l, pattern);
-            //split og spyt ud
-            //if(match.Success){
-            foreach(Match m in match){
-                yield return m.Groups["word"].Value;
-                //yield return m.ToString();
+        foreach(var l in lines){ 
+            var match = Regex.Match(l, pattern);
+            while(match.Success){
+                yield return match.Groups["word"].Value;
+                match = match.NextMatch();
             }
         }
     }
@@ -24,12 +21,10 @@ public static class RegExpr
 
         var pattern = @"(?<width>[0-9]+)x(?<height>[0-9]+)([, ] )*";
 
-        var match = Regex.Matches(resolutions, pattern);
-        //OBS - er match en collection? Tjek om man kan lave noget med et
-        //for-loop i stedet. Samme i andre opgaver med .Matches!
-
-        foreach(Match m in match){
-            yield return (int.Parse(m.Groups["width"].Value), int.Parse(m.Groups["height"].Value));
+        var match = Regex.Match(resolutions, pattern);
+        while(match.Success){
+            yield return (int.Parse(match.Groups["width"].Value), int.Parse(match.Groups["height"].Value));
+            match = match.NextMatch();
         }
     }
 
@@ -38,29 +33,27 @@ public static class RegExpr
         //var pattern = @"<([a]?)[^>]*>(?<innerText>.*?)</\1>";
         var pattern = $@"<([{tag}]?)[^>]*>(?<innerText>.*?)</\1>";
 
-        var match = Regex.Matches(html, pattern);
-
-        foreach(Match m in match){
-            yield return m.Groups["innerText"].Value;
-        }
+        var match = Regex.Match(html, pattern);
+        while(match.Success){
+                yield return Regex.Replace(match.Groups["innerText"].Value, $@"</?[a-z]*>", "");
+                match = match.NextMatch();
+            }
 
     }
 
     public static IEnumerable<(Uri url, string title)> Urls(string html){
-        //Urls takes as argument a string containing HTML and returns all urls with
-        // their titles if any, otherwise innerText.
-        var pattern = $@"<([a-z]?) href=""(?<url>.*?)?"" [title=""]+(?<titleText>([(]*[A-Za-z ]+[)]*)+)[^>]*>(?<innerText>.*?)</\1>";
+        var pattern = $@"<([a-z]+) href=""(?<url>.*?)?""( [title=""]+(?<titleText>[(]*[A-Za-z ]+[)]*)"")*[^>]*>(?<innerText>.*?)</\1>";
 
-        var match = Regex.Matches(html, pattern);
+        var match = Regex.Match(html, pattern);
         
-        foreach(Match m in match){
-            Uri l = new Uri(m.Groups["url"].Value);
-            if(m.Groups["titleText"].Value != null){
-                yield return (l, m.Groups["titleText"].Value);
+        while(match.Success){
+            Uri l = new Uri(match.Groups["url"].Value);
+            if(match.Groups["titleText"].Value != ""){
+                yield return (l, match.Groups["titleText"].Value);
             } else {
-                yield return (l, m.Groups["innerText"].Value);
+                yield return (l, match.Groups["innerText"].Value);
             }
-            
+            match = match.NextMatch();
         }
     }
 }
