@@ -42,7 +42,6 @@ public class RegExprTests
             var result = RegExpr.InnerText(html, "a");
 
         // Then
-        //OBS!!! ret denne her!!
             result.Should().BeEquivalentTo(new List<string>(){"theoretical computer science","formal language", "characters", "pattern", "string searching algorithms", "strings"});
 
     }
@@ -71,7 +70,7 @@ public class RegExprTests
             var result = RegExpr.InnerText(html, "p");
 
         // Then
-            result.Should().BeEquivalentTo(new List<string>(){"The phrase regular expressions (and consequently, regexes) is often used to mean the specific, standard textual syntax for representing patterns that matching text need to conform to."});
+            result.Should().BeEquivalentTo(new List<string>(){"A regular expression, regex or regexp (sometimes called a rational expression) is, in theoretical computer science and formal language theory, a sequence of characters that define a search pattern. Usually this pattern is then used by string searching algorithms for \"find\" or \"find and replace\" operations on strings."});
 
     }
 
