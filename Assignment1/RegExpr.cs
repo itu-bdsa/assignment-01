@@ -35,10 +35,11 @@ public static class RegExpr
 
         var match = Regex.Match(html, pattern);
         while(match.Success){
-                yield return Regex.Replace(match.Groups["innerText"].Value, $@"</?[a-z]*>", "");
+                //yield return Regex.Replace(match.Groups["innerText"].Value, $@"</?[a-z]*>", "");
+                yield return Regex.Replace(match.Groups["innerText"].Value, $@"</?.*?>", "");
                 match = match.NextMatch();
             }
-
+        //OBS - tjek test for nested tag p i orig text
     }
 
     public static IEnumerable<(Uri url, string title)> Urls(string html){
